@@ -3,7 +3,7 @@ from Token import Token
 class Dictionary:
     NUMERIC_CHARACTERS  = set('0123456789.')
     ALPHABETIC_CHARACTERS = set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-    KEYWORDS = ['if', 'else if', 'else', 'return']
+    KEYWORDS = ['if', 'else if', 'else', 'return', 'delete']
 
     # TOKEN TYPES
     INTEGER                     = 'INT'
@@ -22,6 +22,7 @@ class Dictionary:
     KEYWORD                     = 'KW'
     IDENTIFIER                  = 'ID'
     ASSIGNMENT                  = 'ASSIGN'
+    DELETE                      = 'DELETE'
     EQUAL_TO                    = '=='
     NOT_EQUAL_TO                = '!='
     GREATER_THAN                = '>'

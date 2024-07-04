@@ -67,6 +67,16 @@ class AssignmentNode(Node):
     
     def __str__(self):
         return self.__repr__()
+
+class DeleteNode(Node):
+    """Class for nodes that represent deletions"""
+    def __init__(self, identifier):
+        self.identifier = identifier
+        self.value = ""
+    def __repr__(self):
+        return f"DeleteNode({self.identifier})"
+    def __str__(self):
+        return self.__repr__()
     
 class CellReferenceNode(Node):
     """Class for nodes that represent cell references."""

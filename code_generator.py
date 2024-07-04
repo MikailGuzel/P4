@@ -83,6 +83,13 @@ workbook.save(filename=sys.argv[1])
                 body_code += f"    {self.generate(body, is_root=False)}\n"
             return f'if {condition_code}:\n{body_code}'
 
+    def generate_DeleteNode(self, node):
+        if not isinstance(node.identifier, Token):
+            identifier_code = self.generate(node.identifier, is_root=False)
+        else:
+            identifier_code = node.identifier.value
+        return f"{identifier_code} = None"
+
     def generate_AssignmentNode(self, node):
         if not isinstance(node.identifier, Token):
             identifier_code = self.generate(node.identifier, is_root=False)

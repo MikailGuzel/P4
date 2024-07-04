@@ -1,6 +1,6 @@
 import logging
 from dictionary import Dictionary
-from parser_nodes import AssignmentNode, ExpressionNode, NumberNode, StringNode, IfNode, CellReferenceNode
+from parser_nodes import AssignmentNode, DeleteNode, ExpressionNode, NumberNode, StringNode, IfNode, CellReferenceNode
 
 logger = logging.getLogger(__name__)
 
@@ -29,8 +29,11 @@ class Parser:
         if not line:
             return None  # handle empty lines
         first_token = line[0]
+        print(first_token)
         if first_token.type == Dictionary.KEYWORD and first_token.value == 'if':
             return self.parse_if_statement(line)
+        elif first_token.type == Dictionary.KEYWORD and first_token.value == 'delete':
+            return self.parse_delete(line)
         elif first_token.type == Dictionary.IDENTIFIER or first_token.type == Dictionary.CELL:
             return self.parse_assignment(line)
         else:
@@ -136,6 +139,24 @@ class Parser:
         self.current_line -= 1 # get us to the previous line, because the outer loop will increment the line count
         return IfNode(condition, body)
     
+    def parse_delete(self, line):
+        """Parse an delete statement."""
+        # remove whitespace tokens
+        tokens = [token for token in line if token.type != Dictionary.WHITE_SPACE]
+        # find the deletion token
+        i = 0
+        while tokens[i].value == 'delete':
+            i += 1
+        # everything before the assignment token is the variable
+        # if there's more than 1 token before the assignment token, raise an error
+        if i != 1:
+            raise ValueError("Invalid assignment statement")
+        variable = tokens[1]
+        # if the variable is a cell reference, parse it
+        if variable.type == Dictionary.CELL:
+            variable = self.parse_cell_reference(variable)
+        return DeleteNode(variable)
+
     def parse_assignment(self, line):
         """Parse an assignment statement."""
         # remove whitespace tokens

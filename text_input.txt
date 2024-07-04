@@ -5,3 +5,4 @@ if 2+40 is equal to 42
 	y is 'Oh shit!'
 
 cell a2 is 1337
+delete cell a2
